@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link href="style/css/mzui.min.css" rel="stylesheet">
+		<title>filterBy orderBy 循环过滤排序</title>
+	</head>
+	<body>
+		<style>
+			#example{padding-top: 72px;}
+		</style>
+		<div id="example">
+			<div class="box affix dock-top display in">
+				<div class="heading">
+				  <nav class="nav">
+				    <a><i class="icon-bars"></i></a>
+				  </nav>
+				  <div class="title text-center text-danger"><strong>{{ message }}</strong></div>
+				  <nav class="nav">
+				    <a><i class="icon-search"></i></a>
+				  </nav>
+				</div>
+			</div>	
+			<div class="control">过滤</div>
+		    <input type="text" v-model="searchText" class="input" placeholder="搜索关键词">
+			<ul>
+				<li v-for="user in todos | filterBy searchText in 'name'">{{ $index }}-{{ user.name }}-{{ user.tag }}</li>
+			</ul>
+			<div class="control">排序</div>
+			<ul>
+				<li v-for="user in todos | orderBy field reverse">{{ $index }}-{{ user.name }}-{{ user.tag }}</li>
+			</ul>
+		</div>
+		<script type="text/javascript" src="style/js/vue.js" ></script>
+		<script type="text/javascript" src="style/js/mzui.min.js" ></script>
+		<script type="text/javascript">
+			Zepto(function($){
+			     new Vue({
+					el:"#example",
+					data:{
+						todos: [
+							{ "name": "顺丰车", "tag": 4 },
+							{ "name": "快车", "tag": 2 },
+							{ "name": "出租车", "tag": 5 },
+							{ "name": "巴士", "tag": 1},
+							{ "name": "专车", "tag": 3 },
+							{ "name": "代驾", "tag": 6 }
+						],
+						message: 'filterBy 循环过滤排序',
+						field:'tag',
+						reverse:false,
+						searchText:''
+					}
+				});
+			})
+		</script>
+	</body>
+</html>
+

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link href="style/css/mzui.min.css" rel="stylesheet">
+		<title>控件绑定基本</title>
+	</head>
+	<body>
+		<style>
+			#example{padding-top: 72px;}
+		</style>
+		<div id="example">
+			<div class="box affix dock-top display in">
+				<div class="heading">
+				  <nav class="nav">
+				    <a><i class="icon-bars"></i></a>
+				  </nav>
+				  <div class="title text-center text-danger"><strong>{{ message }}</strong></div>
+				  <nav class="nav">
+				    <a><i class="icon-search"></i></a>
+				  </nav>
+				</div>
+			</div>	
+			<div class="control" >
+				<label>文本框 text</label>
+				<input type="text" v-model="searchText" class="input" placeholder="搜索关键词">
+			</div>
+			<div class="control">
+			<label>复选框checkbox</label>
+		      <div class="checkbox inline-block">
+		        <input type="checkbox"  value="火车" v-model="bizLines">
+		        <label>火车</label>
+		      </div>
+		      <div class="checkbox inline-block">
+		        <input type="checkbox" value="天打" v-model="bizLines">
+		        <label>天打</label>
+		      </div>
+		      <div class="checkbox inline-block">
+		        <input type="checkbox" value="乱搞" v-model="bizLines">
+		        <label>乱搞</label>
+		      </div>
+		    </div>
+			<div class="control">
+		      <label>付款方式（行内 radio）</label>
+		      <div class="radio inline-block">
+		        <input type="radio" value="支付宝" v-model="bizLine">
+		        <label>支付宝</label>
+		      </div>
+		      <div class="radio inline-block">
+		        <input type="radio" value="网银" v-model="bizLine">
+		        <label>网银</label>
+		      </div>
+		    </div>
+			<div class="control has-warning">
+	      <label for="packageType">选择送货方式</label>
+	      <div class="select">
+	        <select v-model="selected">
+	          <option value="normal">普通快递</option>
+	          <option value="ems">EMS</option>
+	          <option value="SF">顺丰</option>
+	        </select>
+	      </div>
+	    </div>
+		<div class="control has-warning">
+      <label for="gifts">选择两个礼物</label>
+      <div class="select multiple">
+        <select v-model="selectedm"  multiple>
+          <option value="apple">苹果</option>
+          <option value="orange">橘子</option>
+          <option value="banana">香蕉</option>
+        </select>
+      </div>
+    </div>	
+			<span>文本框:{{ searchText }}<br>
+			复选框:{{ bizLines | json }}<br>
+			单选按钮:{{ bizLine }}<br>
+			单选SELECT:{{ selected }}<br>
+			多选SELECT:{{ selectedm | json }}<br></span>
+		</div>
+		<script type="text/javascript" src="style/js/vue.js" ></script>
+		<script type="text/javascript" src="style/js/mzui.min.js" ></script>
+		<script type="text/javascript">
+			Zepto(function($){
+			     new Vue({
+					el:"#example",
+					data:{
+						searchText: "",
+						message: '控件绑定基本',
+						bizLines:[],
+						bizLine:'',
+						selected:'',
+						selectedm:[]
+					}
+				});
+			})
+		</script>
+	</body>
+</html>
+

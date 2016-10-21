@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link href="style/css/mzui.min.css" rel="stylesheet">
+		<title>組件-註冊</title>
+	</head>
+	<body>
+		<style>
+			#example{padding-top: 72px;}
+		</style>
+		<div id="example">
+			<div class="box  affix dock-top display in">
+				<div class="heading">
+				  <nav class="nav">
+				    <a><i class="icon-bars"></i></a>
+				  </nav>
+				  <div class="title text-center text-danger"><strong>{{ message }}</strong></div>
+				  <nav class="nav">
+				    <a><i class="icon-search"></i></a>
+				  </nav>
+				</div>
+			</div>
+			<div>全局組件</div>
+			<globalcomponent></globalcomponent>
+			<div>局部組件</div>
+			<localcomponent></localcomponent>
+		</div>
+		<script type="text/javascript" src="style/js/vue.js" ></script>
+		<script type="text/javascript" src="style/js/mzui.min.js" ></script>
+		<script type="text/javascript">
+			Zepto(function($){
+				//註冊組件 組件名稱必須小寫，不能用駝峰命名法
+				Vue.component('globalcomponent', {
+					template: '<div class="box">my first Component</div>'
+				});
+				//局部組件
+				var Child = Vue.extend({
+					template: '<div>i am child!<div>',
+					replace: true
+				});
+				var Parent = Vue.extend({
+					template: '<div class="box">i am Parent <br> <child></child></div>',
+					components: {
+						//只能在父組件模板內調用
+						'child': Child
+					}
+				});
+			    new Vue({
+					el:"#example",
+					data:{
+						message: '組件-註冊'
+					},
+					components: {
+						'localcomponent': Parent
+					}
+				});
+			})
+		</script>
+	</body>
+</html>

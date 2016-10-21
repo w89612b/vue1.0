@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link href="style/css/mzui.min.css" rel="stylesheet">
+		<title>vue1.0示例集合</title>
+	</head>
+	<body>
+		<style>
+			#example{padding-top: 72px;}
+		</style>
+		<div id="example">
+			<div class="box affix dock-top display in">
+				<div class="heading">
+				  <nav class="nav">
+				    <a><i class="icon-bars"></i></a>
+				  </nav>
+				  <div class="title text-center text-danger"><strong>{{ message }}</strong></div>
+				  <nav class="nav">
+				    <a><i class="icon-search"></i></a>
+				  </nav>
+				</div>
+			</div>
+			<div class="list with-divider space">
+			  <a href="{{ item.link }}" class="item with-avatar multi-lines" v-for="item in itemlist">
+			    <div class="avatar circle"><img src="http://zui.sexy/m/doc/img/avatar.png" alt=""></div>
+			    <div class="content">
+		            <div class="title">{{ item.title }}</div>
+		            <div class="subtitle">{{ item.subtitle }}</div>
+	    		</div>
+			    <span class="label yellow">金牌</span>
+			  </a>
+			</div>
+			<!--代码插入-->
+			{{{ code }}}
+			
+			<nav class="nav nav-auto affix dock-bottom justified">
+				<a class="{{ dos.success ? 'success' : '' }}" v-for="dos in todos">{{ dos.text }}</a>
+			</nav>
+		</div>
+		<script type="text/javascript" src="style/js/vue.js" ></script>
+		<script type="text/javascript" src="style/js/mzui.min.js" ></script>
+		
+		<script type="text/javascript">
+			Zepto(function($){
+			     new Vue({
+					el:"#example",
+					data:{
+						/*菜单*/
+						todos: [
+							{ "text": "巴士", "link": "1.html", "success": true},
+							{ "text": "快车", "link": "1.html", "success": false },
+							{ "text": "专车", "link": "1.html", "success": false },
+							{ "text": "顺丰车", "link": "1.html", "success": false },
+							{ "text": "出租车", "link": "1.html", "success": false },
+							{ "text": "代驾", "link": "1.html", "success": false }
+						],
+						message: 'vue1.0示例集合',
+						/*列表*/
+						itemlist: [
+							{ "title": "filterBy,orderBy", "subtitle":"v-for循环过滤排序", "link": "1.html" },
+							{ "title": "指令", "subtitle":"Vue自定义指令", "link": "2.html" },
+							{ "title": "表单", "subtitle":"控件绑定基本", "link": "3.html" },
+							{ "title": "过滤器", "subtitle":"过滤器", "link": "7.html" },
+							{ "title": "過渡", "subtitle":"CSS樣式", "link": "4.html" },
+							{ "title": "組件", "subtitle":"註冊方式", "link": "5.html" },
+							{ "title": "組件", "subtitle":"數據傳遞", "link": "6.html" },
+						],
+						/*代码*/
+						code:'<pre><code data-language="HTML"><div id="app">\n  {{ message }}\n<\/div></code></pre><pre><code data-language="JavaScript">new Vue({\n  el: \'#app\',\n  data: {\n    message: \'Hello Vue.js!\'\n  }\n})</code></pre>'
+					}
+				});
+			})
+		</script>
+		<script type="text/javascript" src="style/js/rainbow-custom.min.js" ></script>
+	</body>
+</html>

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link href="style/css/mzui.min.css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="style/css/animate.css"/>
+		<title>過渡CSS樣式</title>
+	</head>
+	<body>
+		<style>
+			#example{padding-top: 72px;}
+			.expand-transition {
+				transition: all .3s ease;
+				height: 30px;
+				padding: 10px;
+				background-color: #E4E4E4;
+				overflow: hidden;
+			}
+			
+			.expand-enter/*進入的開始狀態*/,.expand-leave/*離開的結束狀態*/{
+				height: 0;
+				padding: 0 10px;
+				opacity: 0;
+			}
+			
+			.wrap {
+				max-width: 18rem;
+				margin: 0 auto;
+				text-align: center;
+			}
+			
+			.site__title {
+				color: #f35626;
+				background-image: -webkit-linear-gradient(92deg, #f35626, #feab3a);
+				-webkit-background-clip: text;
+				-webkit-text-fill-color: transparent;
+				-webkit-animation: hue 60s infinite linear;
+			}
+			
+			.mega {
+				font-size: 3rem;
+				line-height: 1;
+			}
+			
+			.beta {
+				margin-bottom: .75rem;
+				font-weight: 400;
+				font-size: .75rem;
+				line-height: 1;
+			}
+			
+			.subhead,
+			.meta {
+				color: #7b8993;
+			}
+		</style>
+		<div id="example">
+			<div class="box  affix dock-top display in">
+				<div class="heading">
+				  <nav class="nav">
+				    <a><i class="icon-bars"></i></a>
+				  </nav>
+				  <div class="title text-center text-danger"><strong>{{ message }}</strong></div>
+				  <nav class="nav">
+				    <a><i class="icon-search"></i></a>
+				  </nav>
+				</div>
+			</div>	
+			<input type="text" v-model="show" />
+			<select v-model="cssclass" >
+		        <optgroup label="Attention Seekers">
+		          <option value="bounce">bounce</option>
+		          <option value="flash">flash</option>
+		          <option value="pulse">pulse</option>
+		          <option value="rubberBand">rubberBand</option>
+		          <option value="shake">shake</option>
+		          <option value="swing">swing</option>
+		          <option value="tada">tada</option>
+		          <option value="wobble">wobble</option>
+		          <option value="jello">jello</option>
+		        </optgroup>
+		
+		        <optgroup label="Bouncing Entrances">
+		          <option value="bounceIn">bounceIn</option>
+		          <option value="bounceInDown">bounceInDown</option>
+		          <option value="bounceInLeft">bounceInLeft</option>
+		          <option value="bounceInRight">bounceInRight</option>
+		          <option value="bounceInUp">bounceInUp</option>
+		        </optgroup>
+		
+		        <optgroup label="Bouncing Exits">
+		          <option value="bounceOut">bounceOut</option>
+		          <option value="bounceOutDown">bounceOutDown</option>
+		          <option value="bounceOutLeft">bounceOutLeft</option>
+		          <option value="bounceOutRight">bounceOutRight</option>
+		          <option value="bounceOutUp">bounceOutUp</option>
+		        </optgroup>
+		
+		        <optgroup label="Fading Entrances">
+		          <option value="fadeIn">fadeIn</option>
+		          <option value="fadeInDown">fadeInDown</option>
+		          <option value="fadeInDownBig">fadeInDownBig</option>
+		          <option value="fadeInLeft">fadeInLeft</option>
+		          <option value="fadeInLeftBig">fadeInLeftBig</option>
+		          <option value="fadeInRight">fadeInRight</option>
+		          <option value="fadeInRightBig">fadeInRightBig</option>
+		          <option value="fadeInUp">fadeInUp</option>
+		          <option value="fadeInUpBig">fadeInUpBig</option>
+		        </optgroup>
+		
+		        <optgroup label="Fading Exits">
+		          <option value="fadeOut">fadeOut</option>
+		          <option value="fadeOutDown">fadeOutDown</option>
+		          <option value="fadeOutDownBig">fadeOutDownBig</option>
+		          <option value="fadeOutLeft">fadeOutLeft</option>
+		          <option value="fadeOutLeftBig">fadeOutLeftBig</option>
+		          <option value="fadeOutRight">fadeOutRight</option>
+		          <option value="fadeOutRightBig">fadeOutRightBig</option>
+		          <option value="fadeOutUp">fadeOutUp</option>
+		          <option value="fadeOutUpBig">fadeOutUpBig</option>
+		        </optgroup>
+		
+		        <optgroup label="Flippers">
+		          <option value="flip">flip</option>
+		          <option value="flipInX">flipInX</option>
+		          <option value="flipInY">flipInY</option>
+		          <option value="flipOutX">flipOutX</option>
+		          <option value="flipOutY">flipOutY</option>
+		        </optgroup>
+		
+		        <optgroup label="Lightspeed">
+		          <option value="lightSpeedIn">lightSpeedIn</option>
+		          <option value="lightSpeedOut">lightSpeedOut</option>
+		        </optgroup>
+		
+		        <optgroup label="Rotating Entrances">
+		          <option value="rotateIn">rotateIn</option>
+		          <option value="rotateInDownLeft">rotateInDownLeft</option>
+		          <option value="rotateInDownRight">rotateInDownRight</option>
+		          <option value="rotateInUpLeft">rotateInUpLeft</option>
+		          <option value="rotateInUpRight">rotateInUpRight</option>
+		        </optgroup>
+		
+		        <optgroup label="Rotating Exits">
+		          <option value="rotateOut">rotateOut</option>
+		          <option value="rotateOutDownLeft">rotateOutDownLeft</option>
+		          <option value="rotateOutDownRight">rotateOutDownRight</option>
+		          <option value="rotateOutUpLeft">rotateOutUpLeft</option>
+		          <option value="rotateOutUpRight">rotateOutUpRight</option>
+		        </optgroup>
+		
+		        <optgroup label="Sliding Entrances">
+		          <option value="slideInUp">slideInUp</option>
+		          <option value="slideInDown">slideInDown</option>
+		          <option value="slideInLeft">slideInLeft</option>
+		          <option value="slideInRight">slideInRight</option>
+		
+		        </optgroup>
+		        <optgroup label="Sliding Exits">
+		          <option value="slideOutUp">slideOutUp</option>
+		          <option value="slideOutDown">slideOutDown</option>
+		          <option value="slideOutLeft">slideOutLeft</option>
+		          <option value="slideOutRight">slideOutRight</option>
+		          
+		        </optgroup>
+		        
+		        <optgroup label="Zoom Entrances">
+		          <option value="zoomIn">zoomIn</option>
+		          <option value="zoomInDown">zoomInDown</option>
+		          <option value="zoomInLeft">zoomInLeft</option>
+		          <option value="zoomInRight">zoomInRight</option>
+		          <option value="zoomInUp">zoomInUp</option>
+		        </optgroup>
+		        
+		        <optgroup label="Zoom Exits">
+		          <option value="zoomOut">zoomOut</option>
+		          <option value="zoomOutDown">zoomOutDown</option>
+		          <option value="zoomOutLeft">zoomOutLeft</option>
+		          <option value="zoomOutRight">zoomOutRight</option>
+		          <option value="zoomOutUp">zoomOutUp</option>
+		        </optgroup>
+		
+		        <optgroup label="Specials">
+		          <option value="hinge">hinge</option>
+		          <option value="rollIn">rollIn</option>
+		          <option value="rollOut">rollOut</option>
+		        </optgroup>
+		   </select>
+		   <div class="wrap">
+			   <span class="animated" style="display: block;" :class="cssclass"><h1 class="site__title mega">Animate.css</h1></span>
+			    <span class="beta subhead">Just-add-water CSS animations</span>
+			  </div>
+			<div v-if="show" class="animated" transition="bounce">hello</div>
+			<div v-if="show" class="animated" transition="fade">hello</div>
+		</div>
+		<script type="text/javascript" src="style/js/vue.js" ></script>
+		<script type="text/javascript" src="style/js/mzui.min.js" ></script>
+		<script type="text/javascript">
+			Zepto(function($){
+				Vue.transition('bounce',{
+					enterClass:'bounceInLeft',
+					leaveClass:'bounceOutRight'
+				});
+				/*javascript过渡*/
+				Vue.transition('fade',{
+					css: false,
+					enter: function (el, done) {
+						// 元素已被插入 DOM中
+						// 在动画结束后调用 done
+						$(el).css('opacity', 0);
+						//$(el).animate({ opacity: 1 }, 1000, done);
+					},
+					enterCancelled: function (el) {
+						//$(el).stop();
+					},
+					leave: function (el, done) {
+						//与enter相同
+						//$(el).animate({ opacity: 1 }, 1000, done);
+					},
+					leaveCancelled: function (el) {
+						//$(el).stop();
+					}
+				});
+			     new Vue({
+					el:"#example",
+					data:{
+						message: '過渡CSS樣式',
+						show:'',
+						cssclass:''
+					}
+				});
+			})
+		</script>
+	</body>
+</html>

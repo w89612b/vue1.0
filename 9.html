@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link href="style/css/mzui.min.css" rel="stylesheet">
+		<title>組件-动态组件</title>
+	</head>
+	<body>
+		<style>
+			#example{padding-top: 72px;}
+		</style>
+		<div id="example">
+			<div class="box  affix dock-top display in">
+				<div class="heading">
+				  <nav class="nav">
+				    <a><i class="icon-bars"></i></a>
+				  </nav>
+				  <div class="title text-center text-danger"><strong>{{ message }}</strong></div>
+				  <nav class="nav">
+				    <a><i class="icon-search"></i></a>
+				  </nav>
+				</div>
+			</div>
+			<div class="control">
+		      <label>动态组件选择</label>
+		      <div class="radio inline-block">
+		        <input type="radio" id="one" value="fast" v-model="currentView">
+		        <label for="one">fast</label>
+		      </div>
+		      <div class="radio inline-block">
+		        <input type="radio" id="tow" value="bus" v-model="currentView">
+		        <label for="tow">bus</label>
+		      </div>
+		      <div class="radio inline-block">
+		        <input type="radio" id="ccc" value="business" v-model="currentView">
+		        <label for="ccc">business</label>
+		      </div>
+		    </div>
+			<!--子组件模板-->
+			<template id="fast">
+				<div>fast</div>
+			</template>
+			<template id="bus">
+				<div>bus</div>
+			</template>
+			<template id="business">
+				<div>business</div>
+			</template>
+			
+			<component :is="currentView"></component>
+		</div>
+		<script type="text/javascript" src="style/js/vue.js" ></script>
+		<script type="text/javascript" src="style/js/mzui.min.js" ></script>
+		<script type="text/javascript">
+			Zepto(function($){
+				var bus = Vue.extend({
+					template: '#bus',
+					replace: true
+				});
+				var fast = Vue.extend({
+					template: '#fast',
+					replace: true
+				});
+				var business = Vue.extend({
+					template: '#business',
+					replace: true
+				});
+			    new Vue({
+					el:"#example",
+					data:{
+						message: '組件-动态组件',
+						currentView: ''
+					},
+					components: {
+						fast: 'fast',
+						bus: 'bus',
+						business: 'business'
+					}
+				});
+			})
+		</script>
+	</body>
+</html>

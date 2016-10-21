@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link href="style/css/mzui.min.css" rel="stylesheet">
+		<title>組件-數據傳遞</title>
+	</head>
+	<body>
+		<style>
+			#example{padding-top: 72px;}
+		</style>
+		<div id="example">
+			<div class="box  affix dock-top display in">
+				<div class="heading">
+				  <nav class="nav">
+				    <a><i class="icon-bars"></i></a>
+				  </nav>
+				  <div class="title text-center text-danger"><strong>{{ message }}</strong></div>
+				  <nav class="nav">
+				    <a><i class="icon-search"></i></a>
+				  </nav>
+				</div>
+			</div>
+			<p>數據傳遞方式有三種：props  組件通信   slot</p>
+			<div>props 可以是字面量、表達式、綁定修飾符</div>
+			<localcomponent></localcomponent>
+		</div>
+		<script type="text/javascript" src="style/js/vue.js" ></script>
+		<script type="text/javascript" src="style/js/mzui.min.js" ></script>
+		<script type="text/javascript">
+			Zepto(function($){
+				//局部組件  
+				var Child = Vue.extend({
+					//聲明props 不需要驗證為 ['msg','myMessage',.....]一個數組  需要驗證數據類型  如下
+					props: {
+						//基礎類型檢測 （’null‘的意思是任何類型都可以）
+						'msg':'null',
+						//多種類型驗證
+						'myMessage':[String, Number],
+						//必須且是字符串,且有默認值
+						'returnData':{
+							type: String,
+							required: true,
+							default: '父組件data值顯示處'
+						},
+						//指定這個數據為雙向綁定，如果綁定類型不對將拋出以條警告
+						'info': {
+							twoWay: true
+						},
+						//自定義驗證函數
+						'name': {
+							validator: function (value) {
+								return value.length < 10
+							}
+						},
+						//對象/數組的默認值應當由一個函數返回
+						'pobject': {
+							type: Object,
+							default: function (){
+								return { msg1: 'object hello' }
+							},
+							//轉換設置值之前轉換值
+							coerce: function (val) {
+								return val //JSON.parse(val); //將JSON字符串轉換為對象
+							}
+						}
+					},
+					template: '<div>i am {{ msg }}! {{ myMessage }}<br>{{ returnData }}<br>{{ info }}<br>{{ name }}<br>{{ pobject | json }}<div>',
+					replace: true
+				});
+				//實現字面量msg   動態語法 return-data  修飾符 .sync雙向綁定 .once 單次綁定   默認為單向綁定
+				var Parent = Vue.extend({
+					template: '<input type="text" v-model="info"/>\
+					<input type="text" v-model="name"/>\
+					<div class="box">i am Parent <br> \
+					<child msg="Child" my-message="hello!-" :info.sync="info" :name.once="name" :return-data="returndata"></child></div>',
+					data: function(){
+						return {
+							returndata: '-returndata',
+							info: '雙向綁定',
+							name: '單向綁定'
+						}
+					},
+					components: {
+						//只能在父組件模板內調用
+						'child': Child
+					}
+				});
+			    new Vue({
+					el:"#example",
+					data:{
+						message: '組件-數據傳遞'
+					},
+					components: {
+						//組件名稱必須小寫，不能用駝峰命名法
+						'localcomponent': Parent
+					}
+				});
+			})
+		</script>
+	</body>
+</html>

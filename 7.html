@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link href="style/css/mzui.min.css" rel="stylesheet">
+		<title>过滤器</title>
+	</head>
+	<body>
+		<style>
+			#example{padding-top: 72px;}
+		</style>
+		<div id="example">
+			<div class="box affix dock-top display in">
+				<div class="heading">
+				  <nav class="nav">
+				    <a><i class="icon-bars"></i></a>
+				  </nav>
+				  <div class="title text-center text-danger"><strong>{{ message }}</strong></div>
+				  <nav class="nav">
+				    <a><i class="icon-search"></i></a>
+				  </nav>
+				</div>
+			</div>
+			<p>Vue.js内置过滤器有字母操作(capitalize\uppercase\lowercase)、限制(limitBy\filterBy\orderBy)、json、currency、debounce</p>
+			<div>字母操作(仅针对英文)</div>
+			<p>
+			capitalize 将首之母转换为大写形式<br><pre><code data-language="JavaScript">/{/{ 'ddfe' | capitalize }} //'ddfe' => 'Ddfe'</code></pre>
+			uppercase 将所有之母转换为大写字母<br><pre><code data-language="JavaScript">/{/{ 'ddfe' | uppercase }}  //'ddfe' => 'DDFE'</code></pre>
+			lowercase 将所有字母转换为小写字母<br><pre><code data-language="JavaScript">/{/{ 'DDFE' | lowercase }}  //'DDFE' => 'ddfe'</code></pre>
+			</p>
+			<div>限制</div>
+			<p>limitBy\filterBy\orderBy</p>
+			<div>json 本质上和JSON.stringify()一样。把对象转换为字符串</div>
+			<div>currency 数值转换为货币形式输出 两个参数 货币标示（默认为'$'）  小数位数 (默认为2位)</div>
+			<pre><code data-language="JavaScript">/{/{ 'amout' | currency '$' 3 }}  //'12345' => '$123,345.00'</code></pre>
+			<div>debounce 延迟处理器一定时间执行 默认300毫秒 一般与输入控件结合使用</div>
+			<pre><code data-language="JavaScript">{{code}}</code></pre>
+			<div>自定义单项过滤器 输出</div>
+			<span v-text="myfilter1 |  myfilter"></span>
+			<div>自定义单项过滤器带参数 输出</div>
+			<span v-text="myfilter2 |  wrap 'before ' ' after'"></span>
+			<div>自定义双项过滤器 输出</div>
+			<input type="text" v-model="myfilter3 | filterExample" />
+			<span>{{myfilter3}}</span>
+		</div>
+		<script type="text/javascript" src="style/js/vue.js" ></script>
+		<script type="text/javascript" src="style/js/mzui.min.js" ></script>
+		<script type="text/javascript">
+			Zepto(function($){
+				/*全局过滤器，必须定义在实例化Vue对象之前，否则不起作用*/
+				//单项过滤器
+				Vue.filter('myfilter',function (value) {
+					return value.split('').reverse().join('');
+				})
+				//单项带参数过滤器
+				Vue.filter('wrap',function (value, begin, end) {
+					return begin + value + end;
+				})
+			    new Vue({
+					el:"#example",
+					data:{
+						message: '过滤器',
+						code: '<input type="text" @keyup="onKeyup | debounce 500"/>',
+						myfilter1: 'abc',
+						myfilter2: 'hello',
+						myfilter3: '双向过滤器'
+					},
+					filters: {
+						//局部过滤器的书写位置
+						//双向过滤器,一般用于输入项
+						filterExample: {
+							read: function (val) {
+								return 'read' + val;
+							},
+							write: function (newval, oldvale) {
+								return newval + ' write';
+							}
+						}
+					}
+				});
+			})
+		</script>
+		<script type="text/javascript" src="style/js/rainbow-custom.min.js" ></script>
+	</body>
+</html>
